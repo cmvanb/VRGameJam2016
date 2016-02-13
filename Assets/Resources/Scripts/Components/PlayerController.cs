@@ -30,6 +30,8 @@ namespace VRGameJam2016
 
         public void UpdateDriving()
         {
+            var currentSpeed = linearMover.Speed;
+            
             if (Input.GetButton("Accelerate"))
             {
                 gameObject.SendMessage("AccelerateTo", new object[]{
@@ -52,8 +54,6 @@ namespace VRGameJam2016
             {
                 if (inputReceivedLastFrame == true)
                 {
-                    var currentSpeed = linearMover.Speed;
-
                     // We do this to make sure the cycle doesn't continue accelerating when the
                     // player stops providing input.
                     gameObject.SendMessage("AccelerateTo", new object[]{
@@ -67,8 +67,17 @@ namespace VRGameJam2016
 
             var turningAxis = Input.GetAxis("Horizontal");
 
-            transform.Rotate(Vector3.up,
-                turningAxis * Time.deltaTime * Constants.PlayerCycleTurnFactor);
+            var speedPercentage = (currentSpeed - Constants.PlayerCycleSpeedMin)
+                / (Constants.PlayerCycleSpeedMax - Constants.PlayerCycleSpeedMin);
+            
+            var turnFactor = Constants.PlayerCycleTurnFactorMin
+                + ((Constants.PlayerCycleTurnFactorMax - Constants.PlayerCycleTurnFactorMin)
+                * (1 - speedPercentage));
+
+            var turnValue = turningAxis * turnFactor * Time.deltaTime;
+
+            Debug.Log("turnFactor: " +turnFactor);
+            transform.Rotate(Vector3.up, turnValue);
         }
 
         public void UpdateWalking()
