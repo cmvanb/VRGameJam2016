@@ -21,20 +21,34 @@ namespace VRGameJam2016
 
         private float targetSpeed = 0f;
 
+        public float TargetSpeed
+        {
+            get { return targetSpeed; }
+        }
+        
         private float acceleration = 0f;
         
         void Update()
-        {            
-            if (this.speedUnitsPerSecond < targetSpeed)
+        {
+            if (speedUnitsPerSecond < targetSpeed)
             {
-                this.speedUnitsPerSecond += acceleration;
+                speedUnitsPerSecond += acceleration;
+
+                Mathf.Clamp(speedUnitsPerSecond, speedUnitsPerSecond, targetSpeed);
             }
-            else if (this.speedUnitsPerSecond > targetSpeed)
+            else if (speedUnitsPerSecond > targetSpeed)
             {
-                this.speedUnitsPerSecond -= acceleration;
+                speedUnitsPerSecond -= acceleration;
+
+                Mathf.Clamp(speedUnitsPerSecond, targetSpeed, speedUnitsPerSecond);
             }
             
             Mathf.Clamp(speedUnitsPerSecond, -maxSpeedUnitsPerSecond, maxSpeedUnitsPerSecond);
+
+            if (Mathf.Abs(speedUnitsPerSecond) < acceleration)
+            {
+                speedUnitsPerSecond = 0f;
+            }
             
             var unitsDistanceToMove = Time.deltaTime * speedUnitsPerSecond;
             
@@ -42,7 +56,7 @@ namespace VRGameJam2016
 
             if (loggingEnabled)
             {
-                Debug.Log(this.speedUnitsPerSecond);
+                Debug.Log(speedUnitsPerSecond);
             }
         }
 
