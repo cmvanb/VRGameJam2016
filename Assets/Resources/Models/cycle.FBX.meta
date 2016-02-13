@@ -9,19 +9,29 @@ ModelImporter:
     100002: cycle
     100004: wheel_back
     100006: wheel_front
+    100008: trail_start
+    100010: trail_start_distort
     400000: //RootNode
     400002: cycle
     400004: wheel_back
     400006: wheel_front
+    400008: trail_start
+    400010: trail_start_distort
     2300000: cycle
     2300002: wheel_back
     2300004: wheel_front
+    2300006: trail_start
+    2300008: trail_start_distort
     3300000: cycle
     3300002: wheel_back
     3300004: wheel_front
+    3300006: trail_start
+    3300008: trail_start_distort
     4300000: wheel_front
     4300002: wheel_back
     4300004: cycle
+    4300006: trail_start
+    4300008: trail_start_distort
     9500000: //RootNode
   materials:
     importMaterials: 1
