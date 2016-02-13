@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Crossing
+namespace VRGameJam2016
 {
     public class LinearMover : MonoBehaviour
     {
         [SerializeField]
         private float speedUnitsPerSecond = 0f;
+
+        public float Speed
+        {
+            get { return speedUnitsPerSecond; }
+        }
         
         [SerializeField]
         private float maxSpeedUnitsPerSecond = 5f;
