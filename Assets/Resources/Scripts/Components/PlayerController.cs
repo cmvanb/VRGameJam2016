@@ -23,8 +23,8 @@ namespace VRGameJam2016
             linearMover = GetComponent<LinearMover>();
             
             gameObject.SendMessage("AccelerateTo", new object[]{
-                Constants.PlayerCycleSpeedMin,
-                Constants.PlayerCycleAcceleration
+                Constants.CycleSpeedMin,
+                Constants.CycleAcceleration
             });
         }
         
@@ -43,12 +43,13 @@ namespace VRGameJam2016
         public void UpdateDriving()
         {
             var currentSpeed = linearMover.Speed;
-            
+
+            // Map input to accel/decel.
             if (Input.GetButton("Accelerate"))
             {
                 gameObject.SendMessage("AccelerateTo", new object[]{
-                    Constants.PlayerCycleSpeedMax,
-                    Constants.PlayerCycleAcceleration
+                    Constants.CycleSpeedMax,
+                    Constants.CycleAcceleration
                 });
 
                 inputReceivedLastFrame = true;
@@ -56,8 +57,8 @@ namespace VRGameJam2016
             else if (Input.GetButton("Decelerate"))
             {
                 gameObject.SendMessage("AccelerateTo", new object[]{
-                    Constants.PlayerCycleSpeedMin,
-                    Constants.PlayerCycleDeceleration
+                    Constants.CycleSpeedMin,
+                    Constants.CycleDeceleration
                 });
                 
                 inputReceivedLastFrame = true;
@@ -72,7 +73,7 @@ namespace VRGameJam2016
                     // player stops providing input.
                     gameObject.SendMessage("AccelerateTo", new object[]{
                         targetSpeed,
-                        Constants.PlayerCycleAcceleration
+                        Constants.CycleAcceleration
                     });
 
                     inputReceivedLastFrame = false;
@@ -82,11 +83,11 @@ namespace VRGameJam2016
             // Calculate turn math.
             var turningAxis = Input.GetAxis("Horizontal");
 
-            var speedPercentage = (currentSpeed - Constants.PlayerCycleSpeedMin)
-                / (Constants.PlayerCycleSpeedMax - Constants.PlayerCycleSpeedMin);
+            var speedPercentage = (currentSpeed - Constants.CycleSpeedMin)
+                / (Constants.CycleSpeedMax - Constants.CycleSpeedMin);
             
-            var turnFactor = Constants.PlayerCycleTurnFactorMin
-                + ((Constants.PlayerCycleTurnFactorMax - Constants.PlayerCycleTurnFactorMin)
+            var turnFactor = Constants.CycleTurnFactorMin
+                + ((Constants.CycleTurnFactorMax - Constants.CycleTurnFactorMin)
                 * (1 - speedPercentage));
 
             var targetTurnValue = turningAxis * turnFactor * Time.deltaTime;
@@ -96,9 +97,22 @@ namespace VRGameJam2016
             transform.Rotate(Vector3.up, turnValue);
 
             // Adjust cycle lean to match turn.
-            
-            
-            //cycle.transform.Rotate(Vector3.forward, turningAxis * turnFactor
+            if (turningAxis < -0.1f
+                || turningAxis > 0.1f)
+            {            
+                var turnPercentage = turnFactor / Constants.CycleTurnFactorMax;
+
+                var targetLeanAngle = turnPercentage * -turningAxis * Constants.CycleLeanAngleMax;
+
+                var currentLeanAngle = cycle.transform.eulerAngles.z;
+
+                var newLeanAngle = Mathf.LerpAngle(currentLeanAngle, targetLeanAngle, 10 * Time.deltaTime);
+
+                cycle.transform.eulerAngles = new Vector3(
+                    cycle.transform.eulerAngles.x,
+                    cycle.transform.eulerAngles.y,
+                    newLeanAngle);
+            }
         }
 
         public void UpdateWalking()
