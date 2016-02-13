@@ -97,22 +97,24 @@ namespace VRGameJam2016
             transform.Rotate(Vector3.up, turnValue);
 
             // Adjust cycle lean to match turn.
+            var targetLeanAngle = 0f;
+            
             if (turningAxis < -0.1f
                 || turningAxis > 0.1f)
             {            
                 var turnPercentage = turnFactor / Constants.CycleTurnFactorMax;
 
-                var targetLeanAngle = turnPercentage * -turningAxis * Constants.CycleLeanAngleMax;
-
-                var currentLeanAngle = cycle.transform.eulerAngles.z;
-
-                var newLeanAngle = Mathf.LerpAngle(currentLeanAngle, targetLeanAngle, 10 * Time.deltaTime);
-
-                cycle.transform.eulerAngles = new Vector3(
-                    cycle.transform.eulerAngles.x,
-                    cycle.transform.eulerAngles.y,
-                    newLeanAngle);
+                targetLeanAngle = turnPercentage * -turningAxis * Constants.CycleLeanAngleMax;
             }
+            
+            var currentLeanAngle = cycle.transform.eulerAngles.z;
+                
+            var newLeanAngle = Mathf.LerpAngle(currentLeanAngle, targetLeanAngle, 10 * Time.deltaTime);
+
+            cycle.transform.eulerAngles = new Vector3(
+                cycle.transform.eulerAngles.x,
+                cycle.transform.eulerAngles.y,
+                newLeanAngle);
         }
 
         public void UpdateWalking()
