@@ -14,6 +14,11 @@ namespace VRGameJam2016
         void Start()
         {
             linearMover = GetComponent<LinearMover>();
+            
+            gameObject.SendMessage("AccelerateTo", new object[]{
+                Constants.PlayerCycleSpeedMin,
+                Constants.PlayerCycleAcceleration
+            });
         }
         
         void Update()
