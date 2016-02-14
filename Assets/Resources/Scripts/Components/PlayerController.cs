@@ -5,6 +5,15 @@ namespace VRGameJam2016
 {
     public class PlayerController : MonoBehaviour
     {
+        public float SpeedPercentage
+        {
+            get
+            {
+                return (linearMover.speed - Constants.CycleSpeedMin)
+                    / (Constants.CycleSpeedMax - Constants.CycleSpeedMin);
+            }
+        }
+        
         [SerializeField]
         private GameObject cycle;
         
