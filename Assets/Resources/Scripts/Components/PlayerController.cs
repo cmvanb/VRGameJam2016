@@ -26,6 +26,11 @@ namespace VRGameJam2016
                 Constants.CycleSpeedMin,
                 Constants.CycleAcceleration
             });
+
+            if (cycle == null)
+            {
+                cycle = transform.Find("CycleBody").gameObject;
+            }
         }
         
         void Update()

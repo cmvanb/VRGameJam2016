@@ -1,0 +1,7 @@
+infinite grid
+wiimote controls
+trail rendering
+trail collision
+obstacle collision
+walking mode
+multiplayer
