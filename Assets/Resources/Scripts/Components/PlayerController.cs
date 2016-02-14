@@ -13,6 +13,14 @@ namespace VRGameJam2016
                     / (Constants.CycleSpeedMax - Constants.CycleSpeedMin));
             }
         }
+
+        public GameObject Cycle
+        {
+            get
+            {
+                return cycle;
+            }
+        }
         
         [SerializeField]
         private GameObject cycle;
