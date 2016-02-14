@@ -9,8 +9,8 @@ namespace VRGameJam2016
         {
             get
             {
-                return (linearMover.speed - Constants.CycleSpeedMin)
-                    / (Constants.CycleSpeedMax - Constants.CycleSpeedMin);
+                return Mathf.Clamp01((linearMover.Speed - Constants.CycleSpeedMin)
+                    / (Constants.CycleSpeedMax - Constants.CycleSpeedMin));
             }
         }
         
