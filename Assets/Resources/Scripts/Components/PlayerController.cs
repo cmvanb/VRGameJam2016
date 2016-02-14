@@ -13,9 +13,26 @@ namespace VRGameJam2016
                     / (Constants.CycleSpeedMax - Constants.CycleSpeedMin));
             }
         }
+
+        public GameObject Cycle
+        {
+            get
+            {
+                return cycle;
+            }
+        }
+
+        public bool Driving
+        {
+            get { return driving; }
+            set { driving = value; }
+        }
         
         [SerializeField]
         private GameObject cycle;
+
+        [SerializeField]
+        private HandListener handListener;
         
         private bool driving = true;
 
@@ -59,7 +76,8 @@ namespace VRGameJam2016
             var currentSpeed = linearMover.Speed;
 
             // Map input to accel/decel.
-            if (Input.GetButton("Accelerate"))
+            if (Input.GetButton("Accelerate")
+                || (handListener && handListener.ShouldAccelerate))
             {
                 gameObject.SendMessage("AccelerateTo", new object[]{
                     Constants.CycleSpeedMax,
@@ -68,7 +86,8 @@ namespace VRGameJam2016
 
                 inputReceivedLastFrame = true;
             }
-            else if (Input.GetButton("Decelerate"))
+            else if (Input.GetButton("Decelerate")
+                || (handListener && handListener.ShouldDecelerate))
             {
                 gameObject.SendMessage("AccelerateTo", new object[]{
                     Constants.CycleSpeedMin,
@@ -96,6 +115,11 @@ namespace VRGameJam2016
 
             // Calculate turn math.
             var turningAxis = Input.GetAxis("Horizontal");
+
+            if (handListener != null)
+            {
+                turningAxis = handListener.TurningAxis;
+            }
 
             var speedPercentage = (currentSpeed - Constants.CycleSpeedMin)
                 / (Constants.CycleSpeedMax - Constants.CycleSpeedMin);
@@ -134,11 +158,6 @@ namespace VRGameJam2016
         public void UpdateWalking()
         {
             // TODO...
-        }
-
-        public void SetDriving(bool driving)
-        {
-            this.driving = driving;
         }
     }
 }
