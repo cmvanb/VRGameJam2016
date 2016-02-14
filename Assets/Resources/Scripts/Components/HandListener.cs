@@ -44,6 +44,22 @@ namespace VRGameJam2016
                 TurningAxis = actualDifference / maxDifference;
                 
                 // TODO: do accel/decel
+
+                float sphereDiameter1 = 2 * hand1.SphereRadius;
+                float sphereDiameter2 = 2 * hand2.SphereRadius;
+
+                Debug.Log(sphereDiameter1 + " | " + sphereDiameter2);
+
+                if (sphereDiameter1 < 100f && sphereDiameter2 < 100f)
+                {
+                    ShouldAccelerate = false;
+                    ShouldDecelerate = true;
+                }
+                else
+                {
+                    ShouldAccelerate = true;
+                    ShouldDecelerate = false;
+                }
             }
             else if (hand1 != null)
             {
