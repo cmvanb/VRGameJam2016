@@ -15,7 +15,8 @@ namespace VRGameJam2016
         }
 
         void Update() {
-            percentage = (1.0f - movement.SpeedPercentage ) ;
+            percentage =  1.0f - (Mathf.Round(movement.SpeedPercentage * 100) / 100)  ;// (1.0f - movement.SpeedPercentage ) ;
+            if (percentage <= 0.0001f) percentage = 0.0001f;
             
             speedometerMat.SetFloat("_Cutoff", percentage);
         }                
