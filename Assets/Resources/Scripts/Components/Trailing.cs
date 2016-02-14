@@ -42,7 +42,7 @@ namespace VRGameJam2016 {
         void MakeTrail()
         {
             tempTrail = (GameObject)Instantiate(trailPrefab);
-            tempTrail.transform.position = myTranny.position + (transform.forward * -2);// + trailOffset;
+            tempTrail.transform.position = myTranny.position;// + (transform.forward * -1);// + trailOffset;
             tempTrail.transform.eulerAngles = player.Cycle.transform.eulerAngles;
             tempTrail.transform.localScale = new Vector3(1, 1, distanceToPreviousPosition);
             tempTrail.transform.parent = trailHolder.transform;
