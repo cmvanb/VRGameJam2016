@@ -433,6 +433,8 @@ public class HandController : MonoBehaviour {
     if (frame.Id != prev_graphics_id_) {
       UpdateHandModels(hand_graphics_, frame.Hands, leftGraphicsModel, rightGraphicsModel);
       prev_graphics_id_ = frame.Id;
+
+      gameObject.SendMessage(VRGameJam2016.Messages.UpdateHands, frame.Hands);
     }
 
     //perFrameFixedUpdateOffset_ contains the maximum offset of this Update cycle
