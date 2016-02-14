@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace VRGameJam2016 {
     public class Trailing : MonoBehaviour
@@ -15,6 +16,7 @@ namespace VRGameJam2016 {
         private float distanceToPreviousPosition = 0f;
         private Vector3 trailOffset = new Vector3(0,0,-1f);
         private GameObject trailHolder;
+        private List<GameObject> trailList = new List<GameObject>();
 
         void Start() 
         {

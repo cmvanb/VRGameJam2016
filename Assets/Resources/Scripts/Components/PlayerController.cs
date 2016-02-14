@@ -14,6 +14,14 @@ namespace VRGameJam2016
             }
         }
 
+        public GameObject Cycle
+        {
+            get
+            {
+                return cycle;
+            }
+        }
+
         public bool Driving
         {
             get { return driving; }
